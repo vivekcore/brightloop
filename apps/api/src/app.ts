@@ -7,6 +7,7 @@ import { staffRoutes } from "./modules/staff/staff.routes.js";
 import { productRoutes } from "./modules/products/product.routes.js";
 import { quotationTemplateRoutes } from "./modules/subscriptions/quotation-template.routes.js";
 import { subscriptionRoutes } from "./modules/subscriptions/subscription.routes.js";
+import { invoiceRoutes } from "./modules/invoicing/invoice.routes.js";
 import { errorHandler } from "./middleware/error-handler.js";
 
 const app: Express = express();
@@ -31,6 +32,7 @@ app.use(staffRoutes);
 app.use(productRoutes);
 app.use(quotationTemplateRoutes);
 app.use(subscriptionRoutes);
+app.use(invoiceRoutes);
 app.use(errorHandler);
 
 app.listen(port, () => {
