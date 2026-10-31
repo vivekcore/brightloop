@@ -48,3 +48,60 @@ a {
     display: unset;
   }
 }
+/* Hallmark · shape: app screen · genre: modern-minimal · theme: Dose (deal 2/3, seed brightloop-admin-staff-billing-9e9e·9fab818f·2026-10-31·r0) · nav: compact finance rail + top bar · signature: invoice register · states: demo, filtered empty, refreshing · dose: warm paper, evergreen signal, low density */
+/* Hallmark · pre-emit critique: P4 H5 E5 S4 R5 V4 · weakest: S, invoice records lead instead of generic finance cards */
+@import "./tokens.css";
+@import "./base.css";
+@import "tailwindcss";
+
+@theme inline {
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink);
+  --color-card: var(--color-paper);
+  --color-card-foreground: var(--color-ink);
+  --color-popover: var(--color-paper);
+  --color-popover-foreground: var(--color-ink);
+  --color-primary: var(--color-accent);
+  --color-primary-foreground: var(--color-accent-ink);
+  --color-secondary: var(--color-paper-2);
+  --color-secondary-foreground: var(--color-ink);
+  --color-muted: var(--color-paper-2);
+  --color-muted-foreground: var(--color-muted);
+  --color-accent: var(--color-paper-3);
+  --color-accent-foreground: var(--color-ink);
+  --color-destructive: var(--color-error);
+  --color-border: var(--color-rule);
+  --color-input: var(--color-muted);
+  --color-ring: var(--color-focus);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --radius-sm: 0.25rem;
+  --radius-md: var(--radius-input);
+  --radius-lg: var(--radius-card);
+}
+
+body {
+  --font-display: var(--font-geist-sans);
+  --font-body: var(--font-geist-sans);
+  --font-outlier: var(--font-geist-mono);
+}
+
+button,
+input,
+select {
+  color: inherit;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  button:not(:disabled):hover {
+    filter: brightness(0.97);
+  }
+}
+
+button:not(:disabled):active {
+  transform: translateY(1px);
+}
