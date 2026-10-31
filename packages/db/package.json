@@ -6,6 +6,10 @@
   "exports": {
     "./prisma":"./src/prisma.ts"
   },
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev"
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/node": "^26.6.6",
