@@ -4,6 +4,7 @@ import { Express } from "express";
 import cors from "cors";
 import { authRoutes } from "./modules/auth/auth.routes.js";
 import { staffRoutes } from "./modules/staff/staff.routes.js";
+import { productRoutes } from "./modules/products/product.routes.js";
 import { errorHandler } from "./middleware/error-handler.js";
 
 const app: Express = express();
@@ -25,6 +26,7 @@ app.get("/api/health", (req, res) => {
 
 app.use(authRoutes);
 app.use(staffRoutes);
+app.use(productRoutes);
 app.use(errorHandler);
 
 app.listen(port, () => {
