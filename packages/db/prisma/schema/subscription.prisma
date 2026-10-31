@@ -81,6 +81,7 @@ model Subscription {
   updatedAt               DateTime            @updatedAt
   items                   SubscriptionItem[]
   events                  SubscriptionEvent[]
+  invoices                Invoice[]
 
   @@index([customerId, status])
   @@index([planId])

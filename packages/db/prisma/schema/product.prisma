@@ -17,6 +17,9 @@ model Product {
   updatedAt   DateTime         @updatedAt
   variants    ProductVariant[]
   plans       Plan[]
+  quotationTemplateItems QuotationTemplateItem[]
+  subscriptionItems      SubscriptionItem[]
+  invoiceItems           InvoiceItem[]
 
   @@map("product")
 }
