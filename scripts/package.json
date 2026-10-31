@@ -1,0 +1,10 @@
+{
+  "name": "scripts",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@repo/db": "workspace:*",
+    "dotenv": "^18.0.9",
+    "tsx": "^4.23.15"
+  }
+}
