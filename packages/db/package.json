@@ -4,14 +4,15 @@
   "type": "module",
   "private": true,
   "exports": {
-    "./prisma":"./src/index.ts"
+    ".": "./src/index.ts",
+    "./prisma": "./src/index.ts"
   },
   "scripts": {
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev"
   },
   "devDependencies": {
-    "@repo/typescript-config":"workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@types/bun": "latest",
     "@types/node": "^26.6.6",
     "@types/pg": "^8.23.1",
