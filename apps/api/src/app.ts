@@ -8,6 +8,9 @@ import { productRoutes } from "./modules/products/product.routes.js";
 import { quotationTemplateRoutes } from "./modules/subscriptions/quotation-template.routes.js";
 import { subscriptionRoutes } from "./modules/subscriptions/subscription.routes.js";
 import { invoiceRoutes } from "./modules/invoicing/invoice.routes.js";
+import { discountRoutes } from "./modules/invoicing/discount.routes.js";
+import { paymentRoutes } from "./modules/invoicing/payment.routes.js";
+import { dashboardRoutes } from "./modules/invoicing/dashboard.routes.js";
 import { errorHandler } from "./middleware/error-handler.js";
 
 const app: Express = express();
@@ -33,6 +36,9 @@ app.use(productRoutes);
 app.use(quotationTemplateRoutes);
 app.use(subscriptionRoutes);
 app.use(invoiceRoutes);
+app.use(discountRoutes);
+app.use(paymentRoutes);
+app.use(dashboardRoutes);
 app.use(errorHandler);
 
 app.listen(port, () => {

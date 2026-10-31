@@ -13,6 +13,7 @@ model User {
   createdSubscriptions  Subscription[]      @relation("CreatedSubscriptions")
   actorEvents           SubscriptionEvent[] @relation("SubscriptionActorEvents")
   invoices              Invoice[]           @relation("CustomerInvoices")
+  createdPayments       Payment[]           @relation("CreatedPayments")
 
   @@map("user")
 }

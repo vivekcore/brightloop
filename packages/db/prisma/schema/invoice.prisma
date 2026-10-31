@@ -23,6 +23,10 @@ model Invoice {
   createdAt          DateTime      @default(now())
   updatedAt          DateTime      @updatedAt
   items              InvoiceItem[]
+  payments           Payment[]
+  discountId         String?
+  discount           Discount? @relation(fields: [discountId], references: [id])
+  discountAmount     Decimal?  @db.Decimal(12, 2)
 
   @@unique([subscriptionId, billingPeriodStart])
   @@index([customerId, status])

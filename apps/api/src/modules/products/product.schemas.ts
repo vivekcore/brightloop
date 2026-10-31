@@ -30,7 +30,7 @@ export const createVariantSchema = z.object({
 
 export const updateVariantSchema = createVariantSchema.partial();
 
-export const createPlanSchema = z.object({
+export const basePlanSchema = z.object({
   productId: z.string().uuid("Invalid product ID"),
   name: z.string().min(1, "Plan name is required").trim(),
   price: z.number().nonnegative("Plan price must be >= 0"),
@@ -43,7 +43,9 @@ export const createPlanSchema = z.object({
   allowPause: z.boolean().optional().default(false),
   allowRenewal: z.boolean().optional().default(false),
   isActive: z.boolean().optional().default(true),
-}).refine(data => {
+});
+
+export const createPlanSchema = basePlanSchema.refine(data => {
   if (data.availableFrom && data.availableUntil) {
     return data.availableUntil >= data.availableFrom;
   }
@@ -53,7 +55,7 @@ export const createPlanSchema = z.object({
   path: ["availableUntil"],
 });
 
-export const updatePlanSchema = createPlanSchema.partial().omit({ productId: true }).refine(data => {
+export const updatePlanSchema = basePlanSchema.omit({ productId: true }).partial().refine(data => {
   if (data.availableFrom && data.availableUntil) {
     return data.availableUntil >= data.availableFrom;
   }

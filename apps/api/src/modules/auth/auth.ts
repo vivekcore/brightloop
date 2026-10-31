@@ -24,4 +24,9 @@ export const auth = betterAuth({
   trustedOrigins: [
     process.env.FRONTEND_URL || "http://localhost:3000",
   ],
+  advanced: {
+    database: {
+      validateSchema: false,
+    },
+  },
 });

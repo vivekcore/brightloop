@@ -21,9 +21,22 @@ export async function generateInvoiceController(req: Request, res: Response) {
       ? "Invoice already exists for this billing period"
       : "Invoice generated successfully";
 
+    const inv = result.invoice;
+    if (inv) {
+      for (const key of ["subtotal", "taxTotal", "total"]) {
+        if (inv[key] != null) inv[key] = Number(inv[key]).toFixed(2);
+      }
+      if (Array.isArray(inv.items)) {
+        for (const item of inv.items) {
+          for (const key of ["unitPrice", "taxRate", "taxAmount", "lineSubtotal", "lineTotal"]) {
+            if (item[key] != null) item[key] = Number(item[key]).toFixed(2);
+          }
+        }
+      }
+    }
     return res.status(statusCode).json({
       message,
-      invoice: result.invoice,
+      invoice: inv,
     });
   } catch (error: any) {
     return res.status(400).json({ error: error.message });

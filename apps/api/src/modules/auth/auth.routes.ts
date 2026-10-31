@@ -6,7 +6,7 @@ import { catchAsync } from "../../utils/async_api.js";
 const router:Router = Router();
 
 //  all better-auth standard routes 
-router.all("/api/auth/*", catchAsync(handleBetterAuth));
+router.all("/api/auth/*splat", catchAsync(handleBetterAuth));
 
 // Custom customer registration endpoint 
 router.post("/api/auth/register", catchAsync(registerCustomer));
