@@ -1,4 +1,4 @@
-import { Prisma } from '../generated/client/browser.js';
+import { Prisma } from '../generated/prisma/client.js';
 
 export { prisma } from './prisma.js';
 export { ROLES, type UserRole } from './roles.js';

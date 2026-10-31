@@ -1,0 +1,133 @@
+enum SubscriptionStatus {
+  DRAFT
+  QUOTATION
+  CONFIRMED
+  ACTIVE
+  CLOSED
+}
+
+model QuotationTemplate {
+  id            String                  @id @default(uuid())
+  name          String
+  description   String?
+  planId        String
+  plan          Plan                    @relation(fields: [planId], references: [id])
+  validityDays  Int                     @default(30)
+  isActive      Boolean                 @default(true)
+  createdAt     DateTime                @default(now())
+  updatedAt     DateTime                @updatedAt
+  items         QuotationTemplateItem[]
+  subscriptions Subscription[]
+
+  @@index([planId])
+  @@index([isActive])
+  @@map("quotation_template")
+}
+
+model QuotationTemplateItem {
+  id          String            @id @default(uuid())
+  templateId  String
+  template    QuotationTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product          @relation(fields: [productId], references: [id])
+  variantId   String?
+  description String?
+  quantity    Int               @default(1)
+  unitPrice   Decimal?          @db.Decimal(12, 2)
+  sortOrder   Int               @default(0)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([templateId])
+  @@index([productId])
+  @@map("quotation_template_item")
+}
+
+model Subscription {
+  id                      String              @id @default(uuid())
+  number                  String              @unique
+  customerId              String
+  customer                User                @relation("CustomerSubscriptions", fields: [customerId], references: [id])
+  planId                  String
+  plan                    Plan                @relation(fields: [planId], references: [id])
+  quotationTemplateId     String?
+  quotationTemplate       QuotationTemplate?  @relation(fields: [quotationTemplateId], references: [id])
+  createdById             String
+  createdBy               User                @relation("CreatedSubscriptions", fields: [createdById], references: [id])
+  status                  SubscriptionStatus  @default(DRAFT)
+  startDate               DateTime
+  expiryDate              DateTime
+  paymentTermsDays        Int?                @default(0)
+  quotationIssuedAt       DateTime?
+  quotationValidUntil     DateTime?
+  confirmedAt             DateTime?
+  activatedAt             DateTime?
+  closedAt                DateTime?
+  closeReason             String?
+  isPaused                Boolean             @default(false)
+  pausedAt                DateTime?
+  resumedAt               DateTime?
+  renewedFromId           String?
+  renewedFrom             Subscription?       @relation("SubscriptionRenewal", fields: [renewedFromId], references: [id], onDelete: SetNull)
+  renewals                Subscription[]      @relation("SubscriptionRenewal")
+  planNameSnapshot        String
+  planPriceSnapshot       Decimal             @db.Decimal(12, 2)
+  billingIntervalSnapshot BillingInterval
+  currency                String              @default("USD")
+  subtotal                Decimal             @db.Decimal(12, 2)
+  taxTotal                Decimal             @db.Decimal(12, 2)
+  total                   Decimal             @db.Decimal(12, 2)
+  createdAt               DateTime            @default(now())
+  updatedAt               DateTime            @updatedAt
+  items                   SubscriptionItem[]
+  events                  SubscriptionEvent[]
+
+  @@index([customerId, status])
+  @@index([planId])
+  @@index([status, startDate])
+  @@index([status, expiryDate])
+  @@index([createdById])
+  @@index([renewedFromId])
+  @@map("subscription")
+}
+
+model SubscriptionItem {
+  id                  String       @id @default(uuid())
+  subscriptionId      String
+  subscription        Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  productId           String
+  product             Product    @relation(fields: [productId], references:[id])
+  variantId           String?
+  descriptionSnapshot String
+  variantSnapshot     String?
+  quantity            Int          @default(1)
+  unitPrice           Decimal      @db.Decimal(12, 2)
+  taxRateSnapshot     Decimal      @default(0) @db.Decimal(5, 2)
+  taxAmount           Decimal      @db.Decimal(12, 2)
+  lineSubtotal        Decimal      @db.Decimal(12, 2)
+  lineTotal           Decimal      @db.Decimal(12, 2)
+  sortOrder           Int          @default(0)
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
+
+  @@index([subscriptionId])
+  @@index([productId])
+  @@map("subscription_item")
+}
+
+model SubscriptionEvent {
+  id             String              @id @default(uuid())
+  subscriptionId String
+  subscription   Subscription        @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  actorId        String?
+  actor          User?               @relation("SubscriptionActorEvents", fields: [actorId], references: [id], onDelete: SetNull)
+  eventType      String
+  fromStatus     SubscriptionStatus?
+  toStatus       SubscriptionStatus?
+  note           String?
+  createdAt      DateTime            @default(now())
+
+  @@index([subscriptionId])
+  @@index([actorId])
+  @@map("subscription_event")
+}

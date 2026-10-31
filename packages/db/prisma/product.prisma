@@ -52,9 +52,11 @@ model Plan {
   allowEarlyClose Boolean         @default(false)
   allowPause      Boolean         @default(false)
   allowRenewal    Boolean         @default(false)
-  isActive        Boolean         @default(true)
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  isActive        Boolean                 @default(true)
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  quotationTemplates QuotationTemplate[]
+  subscriptions      Subscription[]
 
   @@index([productId])
   @@index([billingInterval])
